@@ -1,0 +1,50 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "readerGroupObjectId": {
+      "type": "string",
+      "metadata": {
+        "description": "Microsoft Entra group object ID for Reader role assignment"
+      }
+    },
+    "contributorGroupObjectId": {
+      "type": "string",
+      "metadata": {
+        "description": "Microsoft Entra group object ID for Contributor role assignment"
+      }
+    }
+  },
+  "variables": {
+    "readerRoleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7",
+    "contributorRoleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, parameters('readerGroupObjectId'), variables('readerRoleDefinitionId'))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('readerRoleDefinitionId'))]",
+        "principalId": "[parameters('readerGroupObjectId')]",
+        "principalType": "Group"
+      }
+    },
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, parameters('contributorGroupObjectId'), variables('contributorRoleDefinitionId'))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleDefinitionId'))]",
+        "principalId": "[parameters('contributorGroupObjectId')]",
+        "principalType": "Group"
+      }
+    }
+  ],
+  "outputs": {
+    "scope": {
+      "type": "string",
+      "value": "[resourceGroup().id]"
+    }
+  }
+}

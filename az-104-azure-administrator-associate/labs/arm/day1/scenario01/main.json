@@ -1,0 +1,68 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "readerPrincipalId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "contributorPrincipalId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "readerPrincipalType": {
+      "type": "string",
+      "defaultValue": "Group"
+    },
+    "contributorPrincipalType": {
+      "type": "string",
+      "defaultValue": "Group"
+    }
+  },
+  "variables": {
+    "readerRoleDefinitionId": "acdd72a7-3385-48ef-bd42-f606fba81ae7",
+    "contributorRoleDefinitionId": "b24988ac-6180-42a0-ab88-20f7382dd24c"
+  },
+  "resources": [
+    {
+      "condition": "[not(empty(parameters('readerPrincipalId')))]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, parameters('readerPrincipalId'), variables('readerRoleDefinitionId'))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('readerRoleDefinitionId'))]",
+        "principalId": "[parameters('readerPrincipalId')]",
+        "principalType": "[parameters('readerPrincipalType')]"
+      }
+    },
+    {
+      "condition": "[not(empty(parameters('contributorPrincipalId')))]",
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[guid(resourceGroup().id, parameters('contributorPrincipalId'), variables('contributorRoleDefinitionId'))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', variables('contributorRoleDefinitionId'))]",
+        "principalId": "[parameters('contributorPrincipalId')]",
+        "principalType": "[parameters('contributorPrincipalType')]"
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day1-scenario01"
+    },
+    "readerAssignmentApplied": {
+      "type": "bool",
+      "value": "[not(empty(parameters('readerPrincipalId')))]"
+    },
+    "contributorAssignmentApplied": {
+      "type": "bool",
+      "value": "[not(empty(parameters('contributorPrincipalId')))]"
+    }
+  }
+}

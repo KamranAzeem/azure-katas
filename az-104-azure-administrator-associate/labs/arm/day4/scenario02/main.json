@@ -1,0 +1,70 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "workspaceName": {
+      "type": "string",
+      "defaultValue": "law-az104-d4"
+    },
+    "actionGroupName": {
+      "type": "string",
+      "defaultValue": "ag-az104-d4"
+    },
+    "actionGroupShortName": {
+      "type": "string",
+      "defaultValue": "ag104d4"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.OperationalInsights/workspaces",
+      "apiVersion": "2023-09-01",
+      "name": "[parameters('workspaceName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "sku": {
+          "name": "PerGB2018"
+        },
+        "retentionInDays": 30
+      }
+    },
+    {
+      "type": "Microsoft.Insights/actionGroups",
+      "apiVersion": "2023-01-01",
+      "name": "[parameters('actionGroupName')]",
+      "location": "global",
+      "properties": {
+        "groupShortName": "[parameters('actionGroupShortName')]",
+        "enabled": true,
+        "emailReceivers": [],
+        "smsReceivers": [],
+        "webhookReceivers": [],
+        "armRoleReceivers": [],
+        "azureAppPushReceivers": [],
+        "automationRunbookReceivers": [],
+        "eventHubReceivers": [],
+        "itsmReceivers": [],
+        "logicAppReceivers": [],
+        "voiceReceivers": []
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day4-scenario02"
+    },
+    "logAnalyticsWorkspaceName": {
+      "type": "string",
+      "value": "[parameters('workspaceName')]"
+    },
+    "actionGroupResourceName": {
+      "type": "string",
+      "value": "[parameters('actionGroupName')]"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "environmentTag": {
+      "type": "string",
+      "defaultValue": "Lab"
+    },
+    "ownerTag": {
+      "type": "string",
+      "defaultValue": "kamran"
+    },
+    "courseTag": {
+      "type": "string",
+      "defaultValue": "AZ-104"
+    },
+    "policyAssignmentName": {
+      "type": "string",
+      "defaultValue": "pa-az104-tag-audit"
+    },
+    "policyDefinitionId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "policyTagName": {
+      "type": "string",
+      "defaultValue": "Environment"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/tags",
+      "apiVersion": "2021-04-01",
+      "name": "default",
+      "properties": {
+        "tags": {
+          "Environment": "[parameters('environmentTag')]",
+          "Owner": "[parameters('ownerTag')]",
+          "Course": "[parameters('courseTag')]"
+        }
+      }
+    },
+    {
+      "condition": "[not(empty(parameters('policyDefinitionId')))]",
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2022-06-01",
+      "name": "[parameters('policyAssignmentName')]",
+      "properties": {
+        "policyDefinitionId": "[parameters('policyDefinitionId')]",
+        "parameters": {
+          "tagName": {
+            "value": "[parameters('policyTagName')]"
+          }
+        },
+        "description": "Day 4 governance policy assignment",
+        "displayName": "AZ-104 Day4 Tag Policy"
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day4-scenario01"
+    },
+    "policyAssignmentApplied": {
+      "type": "bool",
+      "value": "[not(empty(parameters('policyDefinitionId')))]"
+    }
+  }
+}

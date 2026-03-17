@@ -1,0 +1,39 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "recoveryServicesVaultName": {
+      "type": "string",
+      "defaultValue": "rsv-az104-d3"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.RecoveryServices/vaults",
+      "apiVersion": "2023-02-01",
+      "name": "[parameters('recoveryServicesVaultName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard",
+        "tier": "Standard"
+      },
+      "properties": {
+        "publicNetworkAccess": "Enabled"
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day3-scenario03"
+    },
+    "vaultName": {
+      "type": "string",
+      "value": "[parameters('recoveryServicesVaultName')]"
+    }
+  }
+}

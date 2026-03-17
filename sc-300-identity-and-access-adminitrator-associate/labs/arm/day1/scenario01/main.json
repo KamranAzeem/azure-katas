@@ -1,0 +1,42 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "resourceGroupName": {
+      "type": "string",
+      "defaultValue": "rg-sc300"
+    },
+    "aadGroupObjectId": {
+      "type": "string",
+      "metadata": {
+        "description": "Entra group object ID for Reader assignment"
+      }
+    }
+  },
+  "variables": {
+    "roleAssignmentName": "[guid(parameters('resourceGroupName'), parameters('aadGroupObjectId'), 'Reader')]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Authorization/roleAssignments",
+      "apiVersion": "2022-04-01",
+      "name": "[variables('roleAssignmentName')]",
+      "scope": "[resourceGroup(parameters('resourceGroupName'))]",
+      "properties": {
+        "roleDefinitionId": "[subscriptionResourceId('Microsoft.Authorization/roleDefinitions', 'acdd72a7-3385-48ef-bd42-f606fba81ae7')]",
+        "principalId": "[parameters('aadGroupObjectId')]",
+        "principalType": "Group"
+      }
+    }
+  ],
+  "outputs": {
+    "scope": {
+      "type": "string",
+      "value": "[resourceGroup(parameters('resourceGroupName')).id]"
+    }
+  }
+}

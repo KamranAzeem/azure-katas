@@ -1,0 +1,81 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "environmentTag": {
+      "type": "string",
+      "defaultValue": "Lab"
+    },
+    "courseTag": {
+      "type": "string",
+      "defaultValue": "AZ-104"
+    },
+    "dayTag": {
+      "type": "string",
+      "defaultValue": "1"
+    },
+    "policyAssignmentName": {
+      "type": "string",
+      "defaultValue": "pa-az104-day1-tag-audit"
+    },
+    "policyDefinitionId": {
+      "type": "string",
+      "defaultValue": ""
+    },
+    "policyTagName": {
+      "type": "string",
+      "defaultValue": "Environment"
+    },
+    "policyTagValue": {
+      "type": "string",
+      "defaultValue": "Lab"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Resources/tags",
+      "apiVersion": "2021-04-01",
+      "name": "default",
+      "properties": {
+        "tags": {
+          "Environment": "[parameters('environmentTag')]",
+          "Course": "[parameters('courseTag')]",
+          "Day": "[parameters('dayTag')]"
+        }
+      }
+    },
+    {
+      "condition": "[not(empty(parameters('policyDefinitionId')))]",
+      "type": "Microsoft.Authorization/policyAssignments",
+      "apiVersion": "2022-06-01",
+      "name": "[parameters('policyAssignmentName')]",
+      "properties": {
+        "policyDefinitionId": "[parameters('policyDefinitionId')]",
+        "parameters": {
+          "tagName": {
+            "value": "[parameters('policyTagName')]"
+          },
+          "tagValue": {
+            "value": "[parameters('policyTagValue')]"
+          }
+        },
+        "description": "Day 1 governance starter assignment",
+        "displayName": "AZ-104 Day1 Tag Governance"
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day1-scenario03"
+    },
+    "policyAssignmentApplied": {
+      "type": "bool",
+      "value": "[not(empty(parameters('policyDefinitionId')))]"
+    }
+  }
+}

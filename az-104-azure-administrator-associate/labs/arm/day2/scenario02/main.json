@@ -1,0 +1,102 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "northeurope"
+    },
+    "vnetName": {
+      "type": "string",
+      "defaultValue": "vnet-az104-d2"
+    },
+    "appSubnetName": {
+      "type": "string",
+      "defaultValue": "snet-app"
+    },
+    "dbSubnetName": {
+      "type": "string",
+      "defaultValue": "snet-db"
+    },
+    "nsgName": {
+      "type": "string",
+      "defaultValue": "nsg-az104-d2"
+    },
+    "allowSshSource": {
+      "type": "string",
+      "defaultValue": "Internet"
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2023-11-01",
+      "name": "[parameters('nsgName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "securityRules": [
+          {
+            "name": "allow-ssh",
+            "properties": {
+              "priority": 100,
+              "access": "Allow",
+              "direction": "Inbound",
+              "protocol": "Tcp",
+              "sourcePortRange": "*",
+              "destinationPortRange": "22",
+              "sourceAddressPrefix": "[parameters('allowSshSource')]",
+              "destinationAddressPrefix": "*"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2023-11-01",
+      "name": "[parameters('vnetName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nsgName'))]"
+      ],
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "10.20.0.0/16"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[parameters('appSubnetName')]",
+            "properties": {
+              "addressPrefix": "10.20.1.0/24",
+              "networkSecurityGroup": {
+                "id": "[resourceId('Microsoft.Network/networkSecurityGroups', parameters('nsgName'))]"
+              }
+            }
+          },
+          {
+            "name": "[parameters('dbSubnetName')]",
+            "properties": {
+              "addressPrefix": "10.20.2.0/24"
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "outputs": {
+    "scenario": {
+      "type": "string",
+      "value": "day2-scenario02"
+    },
+    "deployedVnetName": {
+      "type": "string",
+      "value": "[parameters('vnetName')]"
+    },
+    "deployedNsgName": {
+      "type": "string",
+      "value": "[parameters('nsgName')]"
+    }
+  }
+}
