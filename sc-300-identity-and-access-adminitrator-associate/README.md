@@ -15,7 +15,13 @@ It includes:
 Important links:
 * Official Microsoft Learn certification page for SC-300: https://learn.microsoft.com/en-us/credentials/certifications/identity-and-access-administrator/?practice-assessment-type=certification
 * Official Study guide: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/SC-300
-* Official Microsoft training course videos: https://learn.microsoft.com/en-us/training/course-videos-on-shows
+* [Optional] Official Microsoft (fundamentals) training course SC-900 (free) (~ 4 hours):
+  * https://youtube.com/playlist?list=PLahhVEj9XNTc3cKjd28NUDFPrV4QcfxH5&si=V4g_L372qVuQszhJ
+* Official Microsoft (full) training course videos SC-300 (free) (~ 11 hours): 
+  * https://learn.microsoft.com/en-us/training/course-videos-on-shows
+  * https://youtube.com/playlist?list=PLahhVEj9XNTf6lWUbZLBNULQ7uVqM5Sad&si=HD8fE28YlrOMHaq0
+* Official Exam readiness videos SC-300 (shorter than the full course() - (free) (~ 1 hour):
+  * https://youtube.com/playlist?list=PLahhVEj9XNTfkF9FZHW7FDcdcYRk9kO0d&si=t6lFulW-AYzNTD7P  
 * Practical exam-day tips/notes from this repo: [docs/about-actual-exam.md](docs/about-actual-exam.md)
 
 ## Repository Purpose

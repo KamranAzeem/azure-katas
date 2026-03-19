@@ -16,7 +16,13 @@ It includes:
 Important links:
 * Official Microsoft Learn certification page for Az-104: https://learn.microsoft.com/en-us/credentials/certifications/azure-administrator/?practice-assessment-type=certification
 * Official Study guide: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/az-104 
-* Official Microsoft training course videos (complete & free): https://learn.microsoft.com/en-us/training/course-videos-on-shows 
+* [Optional] Official Microsoft (fundamentals) training course AZ-900 (free) (~ 3 hours): 
+  * https://youtube.com/playlist?list=PLahhVEj9XNTd6H2vpsvm_kBSMsMw9EMUL&si=XTRmVkUm41GRePSl
+* Official Microsoft (full) training course videos AZ-104 (free) (~ 14 hours): 
+  * https://learn.microsoft.com/en-us/training/course-videos-on-shows 
+  * https://youtube.com/playlist?list=PLahhVEj9XNTcj4dwEwRHozO3xcxI_UHYG&si=zeN1tkjq0pMx7Qgk
+* Official Exam readiness videos AZ-104 (shorter than the full course) - (free) (~1 hour): 
+  * https://youtube.com/playlist?list=PLahhVEj9XNTcFnkx03XSK9TUkhzG3YTS_&si=1dxB0qhE3NHVRiQ_ 
 * Practical exam-day tips/notes from this repo: [docs/about-actual-exam.md](docs/about-actual-exam.md)
 
 
@@ -132,7 +138,7 @@ Once you have setup like this, you can safely use any AI assistant of your choic
 |
 |-- ai
 |    |-- ai-policy.md
-|    |-- CONTEXT.md
+|    |-- context.md
 |    |-- next-steps.md
 |    |-- progress.md
 |    |-- daily-checkpoints
