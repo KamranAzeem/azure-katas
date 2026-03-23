@@ -7,6 +7,12 @@ ai/
 .github/copilot-instructions.md
 memories/
 
+#Ignore scratchpad / rough notes
+scratchpad/
+
+
+
+
 # OS
 .DS_Store
 Thumbs.db
