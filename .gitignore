@@ -1,11 +1,52 @@
-# Ignore all AI artifacts and session states
+# AI assistant files/state (do not commit)
+# Team decision: do not push AI-related instruction/state files.
+
+# Generic AI state
+.ai/
 ai/
+.ai-cache/
+.ai-history/
+.chat-history/
+.llm/
+memories/
+
+# AI instruction docs
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+COPILOT.md
+**/AGENTS.md
+**/CLAUDE.md
+**/GEMINI.md
+**/COPILOT.md
+**/copilot-instructions.md
+**/.cursorrules
+
+# Local override docs
+AGENTS.local.md
+CLAUDE.local.md
+GEMINI.local.md
+copilot-instructions.local.md
+
+# Assistant/tool-specific caches
+.aider*
+.claude/
+.gemini/
+.cursor/
+.continue/sessions/
+.continue/cache/
+.continue/index/
+.codeium/
+.windsurf/
+
+# Local AI traces/logs
+*.ai-session
+*.chatlog
+*.llmtrace
+*.promptlog
 *.prompt
 *.aistate
 *.md-internal
-.github/
-.github/copilot-instructions.md
-memories/
 
 #Ignore scratchpad / rough notes
 scratchpad/
